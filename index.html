@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BuildAI — Studio IA pour logos, textes & assets</title>
+  <meta name="description" content="BuildAI — Générateur IA : logos, descriptions produits, textes marketing. Prototype rapide, prêt à être étendu."/>
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+  <!-- ======= Styles (tout en un fichier pour coller facilement) ======= -->
+  <style>
+    :root{
+      --bg:#071025;
+      --card: rgba(255,255,255,0.06);
+      --glass: rgba(255,255,255,0.06);
+      --accent1: #00d4ff;
+      --accent2: #ff7a59;
+      --muted: #9aa6bf;
+      --glass-border: rgba(255,255,255,0.08);
+      --radius: 14px;
+      --maxw: 1200px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color: #e7eefc;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%; margin:0; background: linear-gradient(180deg,#061224 0%, #07102a 60%); -webkit-font-smoothing:antialiased}
+    .container{max-width:var(--maxw); margin:0 auto; padding:28px}
+    header{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 0}
+    .logo{
+      display:flex; align-items:center; gap:12px; color:white; text-decoration:none;
+    }
+    .logo-mark{
+      width:46px; height:46px; border-radius:10px; background: linear-gradient(135deg,var(--accent1), var(--accent2));
+      display:flex; align-items:center; justify-content:center; font-weight:800; color:#041026; font-size:18px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+    }
+    nav a{color:var(--muted); text-decoration:none; margin-left:18px; font-weight:600}
+    .btn {display:inline-block; padding:10px 16px; border-radius:10px; text-decoration:none; font-weight:700; cursor:pointer}
+    .btn-primary{background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#041026}
+    .btn-ghost{background:transparent; color:var(--accent1); border:1px solid rgba(255,255,255,0.06)}
+    /* Hero */
+    .hero{display:flex; gap:28px; align-items:center; padding:48px 0}
+    .hero-left{flex:1 1 520px}
+    h1{font-size:38px; margin:0 0 12px 0; line-height:1.02}
+    p.lead{color:var(--muted); margin:0 0 18px 0; max-width:680px}
+    .features{display:flex; gap:10px; margin-top:18px; flex-wrap:wrap}
+    .feature{background:var(--card); border-radius:10px; padding:10px 14px; color:var(--muted); font-weight:600}
+    /* Hero right (demo box) */
+    .demo-card{
+      width:420px; background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border-radius:16px; padding:18px; border:1px solid var(--glass-border); box-shadow: 0 8px 30px rgba(1,8,20,0.6);
+    }
+    .demo-title{font-weight:700; margin-bottom:8px}
+    .input, textarea{width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:inherit; outline:none}
+    textarea{min-height:84px; resize:vertical}
+    .row{display:flex; gap:10px}
+    .small{font-size:13px; color:var(--muted)}
+    .result-box{
+      margin-top:12px; padding:12px; background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(255,255,255,0.02));
+      border-radius:10px; min-height:70px; color:#dff6ff; font-weight:600;
+    }
+
+    /* Sections */
+    section.cards{display:flex; gap:18px; flex-wrap:wrap; margin:28px 0}
+    .card{flex:1 1 260px; background:var(--card); padding:18px; border-radius:12px; border:1px solid var(--glass-border)}
+    .card h3{margin:0 0 8px 0}
+    .pricing{display:flex; gap:18px; flex-wrap:wrap; margin-top:18px}
+    .price{background:linear-gradient(180deg,#05122a, rgba(255,255,255,0.02)); border-radius:12px; padding:22px; min-width:220px; border:1px solid rgba(255,255,255,0.04)}
+    footer{margin-top:40px; padding:30px 0; color:var(--muted)}
+    .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    /* responsive */
+    @media (max-width:980px){
+      .hero{flex-direction:column-reverse}
+      .demo-card{width:100%}
+      .grid-3{grid-template-columns:1fr}
+    }
+    /* subtle animations */
+    .glow{box-shadow: 0 6px 30px rgba(0,212,255,0.08)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <a class="logo" href="#">
+        <div class="logo-mark">AI</div>
+        <div>
+          <div style="font-weight:800">BuildAI</div>
+          <div style="font-size:12px; color:var(--muted)">Studio IA • Logos • Textes • Assets</div>
+        </div>
+      </a>
+
+      <nav>
+        <a href="#features">Fonctionnalités</a>
+        <a href="#pricing">Tarifs</a>
+        <a href="#demo">Essayer</a>
+        <a class="btn btn-ghost" href="#contact">Contact</a>
+        <a class="btn btn-primary" href="#signup">Créer un compte</a>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+      <div class="hero-left">
+        <h1>Créez logos, textes & assets marketing avec l’IA — en quelques secondes</h1>
+        <p class="lead">BuildAI est un studio IA prêt à l’emploi : générez des logos, descriptions produits, slogans et visuels pour vos projets. Prototype rapide, extensible en SaaS.</p>
+
+        <div class="features" aria-hidden="true">
+          <div class="feature">Générateur instantané</div>
+          <div class="feature">Téléchargement PNG / SVG</div>
+          <div class="feature">Historique & dashboard</div>
+          <div class="feature">Intégration Firebase</div>
+        </div>
+
+        <div style="margin-top:22px;">
+          <a class="btn btn-primary" href="#demo">Essayer la démo</a>
+          <a class="btn btn-ghost" href="#pricing" style="margin-left:10px">Voir les tarifs</a>
+        </div>
+      </div>
+
+      <!-- Demo / generator (client-side mock) -->
+      <div class="demo-card" id="demo">
+        <div class="demo-title">Démo : Générateur de slogan (exemple)</div>
+        <div class="small">Entrez le nom de votre marque et un mot-clé — la démo est simulée localement.</div>
+        <div style="height:12px"></div>
+        <input id="brand" class="input" placeholder="Ex : EcoWave" />
+        <div style="height:8px"></div>
+        <input id="keyword" class="input" placeholder="Mot-clé (ex : durabilité)" />
+        <div style="height:8px"></div>
+        <div class="row">
+          <button id="genBtn" class="btn btn-primary" style="flex:1">Générer</button>
+          <button id="copyBtn" class="btn btn-ghost" style="flex:0 0 90px">Copier</button>
+        </div>
+
+        <div class="result-box" id="result">Résultats ici — appuie sur Générer.</div>
+        <div class="small" style="margin-top:8px">Note : pour production, connecte ce générateur à une API IA (Hugging Face ou proxy sécurisé).</div>
+      </div>
+    </section>
+
+    <!-- Features / Cards -->
+    <section id="features">
+      <div class="cards">
+        <div class="card">
+          <h3>Générateur multi-usage</h3>
+          <p class="small">Slogans, descriptions produits, bio Instagram, idées de contenu — tout en un.</p>
+        </div>
+        <div class="card">
+          <h3>Dashboard & Historique</h3>
+          <p class="small">Chaque création est sauvegardée pour revenir, partager ou télécharger.</p>
+        </div>
+        <div class="card">
+          <h3>Assets & Téléchargement</h3>
+          <p class="small">Téléchargez vos créations en PNG ou SVG. Stockage via Firebase Storage.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" style="margin-top:18px">
+      <h2 style="margin-bottom:12px">Tarifs (prototype)</h2>
+      <div class="pricing">
+        <div class="price">
+          <div style="font-size:13px; color:var(--muted)">Starter</div>
+          <div style="font-size:22px; font-weight:800; margin-top:6px">Gratuit</div>
+          <div style="margin-top:10px; color:var(--muted)">Essayer la démo, 20 créations/mois</div>
+        </div>
+
+        <div class="price glow">
+          <div style="font-size:13px; color:var(--muted)">Pro</div>
+          <div style="font-size:22px; font-weight:800; margin-top:6px">19 $ / mois</div>
+          <div style="margin-top:10px; color:var(--muted)">500 créations, support prioritaire</div>
+        </div>
+
+        <div class="price">
+          <div style="font-size:13px; color:var(--muted)">Agency</div>
+          <div style="font-size:22px; font-weight:800; margin-top:6px">Sur devis</div>
+          <div style="margin-top:10px; color:var(--muted)">Licence illimitée & intégration sur mesure</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick features grid -->
+    <section style="margin-top:28px">
+      <div class="grid-3">
+        <div class="card">
+          <h3>Sécurité & Auth</h3>
+          <p class="small">Compatible Firebase Auth — comptes utilisateurs sécurisés.</p>
+        </div>
+        <div class="card">
+          <h3>Extensible</h3>
+          <p class="small">Facile à connecter à OpenAI, Hugging Face ou ton propre modèle.</p>
+        </div>
+        <div class="card">
+          <h3>Livrable premium</h3>
+          <p class="small">Code propre, docs et vidéo de demo prêts pour la vente.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact / CTA -->
+    <section id="contact" style="margin-top:28px; padding:20px; background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); border-radius:12px; border:1px solid var(--glass-border)">
+      <div style="display:flex; gap:20px; align-items:center; flex-wrap:wrap">
+        <div style="flex:1">
+          <h2 style="margin:0 0 6px 0">Prêt à lancer BuildAI ?</h2>
+          <p class="small" style="margin:0">Contacte Buildora pour la version complète et la personnalisation entreprise.</p>
+        </div>
+        <div>
+          <a class="btn btn-primary" href="mailto:contact@buildora.com?subject=BuildAI%20Demo">Contacter</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div style="display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; align-items:center">
+        <div style="min-width:180px">
+          <div style="font-weight:800">BuildAI • Buildora</div>
+          <div class="small">© Buildora — Tous droits réservés</div>
+        </div>
+        <div class="small">Made with ❤️ • Prototype • Demo</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ======= Scripts (demo generator local) ======= -->
+  <script>
+    // Demo generator (simulé) — remplacer par appel API pour production
+    const genBtn = document.getElementById('genBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const resultBox = document.getElementById('result');
+
+    function fakeGenerate(brand, keyword){
+      // Génération simple et convaincante (mock)
+      const templates = [
+        `${brand} — ${keyword} qui change tout.`,
+        `${brand}: l'excellence en ${keyword}.`,
+        `${brand} — Inspirez confiance. ${keyword} au cœur.`,
+        `${brand} • ${keyword} réinventé.`,
+        `${brand} — votre allié pour ${keyword}`
+      ];
+      // pick varied result
+      const idx = Math.floor(Math.random()*templates.length);
+      return templates[idx];
+    }
+
+    genBtn.addEventListener('click', ()=>{
+      const brand = document.getElementById('brand').value.trim() || 'NomBrand';
+      const keyword = document.getElementById('keyword').value.trim() || 'innovation';
+      resultBox.textContent = 'Génération en cours…';
+      genBtn.disabled = true;
+      setTimeout(()=>{
+        resultBox.textContent = fakeGenerate(brand, keyword);
+        genBtn.disabled = false;
+      }, 700);
+    });
+
+    copyBtn.addEventListener('click', ()=>{
+      const text = resultBox.textContent;
+      if(!text || text.includes('Génération')){ alert('Rien à copier'); return; }
+      navigator.clipboard?.writeText(text).then(()=> alert('Copié !'));
+    });
+  </script>
+</body>
+</html>
