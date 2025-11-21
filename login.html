@@ -1,39 +1,37 @@
-<!-- login.html -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BuildAI — Connexion</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion - BuildAI</title>
+  <link rel="stylesheet" href="auth.css">
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="logo"><div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,var(--neon),var(--accent));display:flex;align-items:center;justify-content:center;color:#041026;font-weight:800">AI</div> BuildAI</div>
-      <div></div>
-    </div>
 
-    <div class="card" style="max-width:420px;margin:auto">
-      <h2 class="center">Se connecter</h2>
+<div class="auth-container">
 
-      <input id="loginEmail" class="input" type="email" placeholder="Email" />
-      <input id="loginPassword" class="input" type="password" placeholder="Mot de passe" />
+  <h2>Se connecter</h2>
 
-      <div class="row">
-        <button id="loginBtn" class="btn" style="flex:1">Se connecter</button>
-        <a href="signup.html" class="btn" style="background:transparent;border:1px solid var(--glass);color:var(--neon)">S'inscrire</a>
-      </div>
+  <form id="loginForm">
+    <input id="email" type="email" placeholder="Email" required>
+    <input id="password" type="password" placeholder="Mot de passe" required>
 
-      <div class="center" style="margin-top:12px">
-        <button id="googleLoginBtn" class="btn" style="background:#db4437;color:#fff">Se connecter avec Google</button>
-      </div>
+    <button type="submit" class="btn-primary">Se connecter</button>
+  </form>
 
-      <p id="loginMessage" class="small center"></p>
-    </div>
-  </div>
+  <div class="divider">ou</div>
 
-  <script>src="auth.js"</script>
-  <script>window.authInit && window.authInit('login')</script>
+  <!-- Google LOGIN button -->
+  <button id="googleLogin" class="btn-google">
+    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">
+    Continuer avec Google
+  </button>
+
+  <p>Pas de compte ? <a href="signup.html">Créer un compte</a></p>
+
+</div>
+
+<script src="auth.js"></script>
+
 </body>
 </html>
