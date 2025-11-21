@@ -1,149 +1,86 @@
-// auth.js (module)
-window.authInit = function(modeHint){ /* noop for fallback */ };
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+// ---------------------------
+// Firebase Init
+// ---------------------------
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import {
   getAuth,
-  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   GoogleAuthProvider,
-  signInWithPopup,
-  onAuthStateChanged,
-  updateProfile
-} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+  signInWithPopup
+} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
-
-/* === REMPLACE ICI ton firebaseConfig === */
+// FIREBASE CONFIGURATION
 const firebaseConfig = {
-  apiKey: "AIzaSyAQYsPnbxkXwpWyA6HPZvIvx3tuq4Nfejg",
-  authDomain: "buildai-f12be.firebaseapp.com",
-  projectId: "buildai-f12be",
-  storageBucket: "buildai-f12be.firebasestorage.app",
-  messagingSenderId: "1029156287214",
-  appId: "1:1029156287214:web:46a2f65d03924ea74179ff",
-  measurementId: "G-WN1JXJBH60"
+  apiKey: "AIzaSyAQYsPnbxkXwpWyA6HPZvIvx3tuq4Nfejg",
+  authDomain: "buildai-f12be.firebaseapp.com",
+  projectId: "buildai-f12be",
+  storageBucket: "buildai-f12be.firebasestorage.app",
+  messagingSenderId: "1029156287214",
+  appId: "1:1029156287214:web:46a2f65d03924ea74179ff",
+  measurementId: "G-WN1JXJBH60"
 };
-/* ======================================= */
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
+const provider = new GoogleAuthProvider();
 
-// Expose for page inline call
-window.authInit = function(modeHint = 'login') {
-  // LOGIN page handlers
-  if (document.getElementById('loginBtn')) {
-    const loginBtn = document.getElementById('loginBtn');
-    const loginEmail = document.getElementById('loginEmail');
-    const loginPassword = document.getElementById('loginPassword');
-    const loginMessage = document.getElementById('loginMessage');
+// ---------------------------
+// SIGNUP email
+// ---------------------------
+const signupForm = document.getElementById("signupForm");
 
-    loginBtn.onclick = async () => {
-      loginMessage.innerText = "";
-      const email = loginEmail.value.trim();
-      const pass = loginPassword.value;
-      if (!email || !pass) { loginMessage.innerText = "Email + mot de passe requis."; return; }
-      try {
-        await signInWithEmailAndPassword(auth, email, pass);
-        loginMessage.innerText = "Connexion réussie — redirection...";
-        setTimeout(()=> window.location.href = "dashboard.html", 700);
-      } catch (err) {
-        loginMessage.innerText = err.message || "Erreur de connexion";
-        console.error(err);
-      }
-    };
+if (signupForm) {
+  signupForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    const googleLoginBtn = document.getElementById('googleLoginBtn');
-    googleLoginBtn.onclick = async () => {
-      try {
-        const result = await signInWithPopup(auth, googleProvider);
-        await ensureUserDoc(result.user);
-        window.location.href = "dashboard.html";
-      } catch (err) {
-        loginMessage.innerText = (err.message || "Erreur Google");
-        console.error(err);
-      }
-    };
-  }
+    const email = document.getElementById("email").value.trim();
+    const pass = document.getElementById("password").value.trim();
 
-  // SIGNUP page handlers
-  if (document.getElementById('registerBtn')) {
-    const registerBtn = document.getElementById('registerBtn');
-    const regName = document.getElementById('regName');
-    const regEmail = document.getElementById('regEmail');
-    const regPassword = document.getElementById('regPassword');
-    const regMessage = document.getElementById('regMessage');
-
-    registerBtn.onclick = async () => {
-      regMessage.innerText = "";
-      const name = regName.value.trim();
-      const email = regEmail.value.trim();
-      const pass = regPassword.value;
-      if (!email || pass.length < 6) { regMessage.innerText = "Email valide + mdp 6+ chars."; return; }
-      try {
-        const cred = await createUserWithEmailAndPassword(auth, email, pass);
-        // set displayName if provided
-        if (name) {
-          try { await updateProfile(cred.user, { displayName: name }); } catch {}
-        }
-        await ensureUserDoc(cred.user);
-        regMessage.innerText = "Compte créé — redirection...";
-        setTimeout(()=> window.location.href = "dashboard.html", 700);
-      } catch (err) {
-        regMessage.innerText = err.message || "Erreur inscription";
-        console.error(err);
-      }
-    };
-
-    const googleRegisterBtn = document.getElementById('googleRegisterBtn');
-    if (googleRegisterBtn) {
-      googleRegisterBtn.onclick = async () => {
-        try {
-          const result = await signInWithPopup(auth, googleProvider);
-          await ensureUserDoc(result.user);
-          window.location.href = "dashboard.html";
-        } catch (err) {
-          regMessage.innerText = (err.message || "Erreur Google");
-          console.error(err);
-        }
-      };
-    }
-  }
-
-  // onAuthStateChanged: redirect already-logged users away from auth pages
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // if on login/signup page, redirect to dashboard
-      if (location.pathname.endsWith('login.html') || location.pathname.endsWith('signup.html') || location.pathname.endsWith('/')) {
-        // small delay to allow UI message
-        setTimeout(()=> { if (location.pathname.indexOf('dashboard') === -1) location.href = 'dashboard.html'; }, 200);
-      }
+    try {
+      await createUserWithEmailAndPassword(auth, email, pass);
+      window.location.href = "dashboard.html"; // redirection OK
+    } catch (error) {
+      alert(error.message);
     }
   });
-};
+}
 
-// Ensure there is a Firestore doc for the user
-async function ensureUserDoc(user) {
-  if (!user || !user.uid) return;
-  const ref = doc(db, 'users', user.uid);
-  const snap = await getDoc(ref);
-  if (!snap.exists()) {
-    const profile = {
-      displayName: user.displayName || null,
-      email: user.email || null,
-      createdAt: serverTimestamp(),
-      credits: 10,
-      plan: "free",
-      history: []
-    };
-    await setDoc(ref, profile);
+// ---------------------------
+// LOGIN email
+// ---------------------------
+const loginForm = document.getElementById("loginForm");
+
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const pass = document.getElementById("password").value.trim();
+
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+      window.location.href = "dashboard.html";
+    } catch (error) {
+      alert(error.message);
+    }
+  });
+}
+
+// ---------------------------
+// GOOGLE LOGIN + SIGNUP
+// ---------------------------
+const googleLogin = document.getElementById("googleLogin");
+const googleSignup = document.getElementById("googleSignup");
+
+async function googleAuth() {
+  try {
+    await signInWithPopup(auth, provider);
+    window.location.href = "dashboard.html";
+  } catch (error) {
+    alert(error.message);
   }
 }
+
+if (googleLogin) googleLogin.onclick = googleAuth;
+if (googleSignup) googleSignup.onclick = googleAuth;
