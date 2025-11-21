@@ -1,0 +1,45 @@
+.btn-google {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.btn-google img {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.auth-container {
+  width: 90%;
+  max-width: 350px;
+  margin: auto;
+  margin-top: 80px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+}
+.divider {
+  text-align: center;
+  margin: 15px 0;
+  color: #888;
+}
