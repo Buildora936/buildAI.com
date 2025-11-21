@@ -1,0 +1,40 @@
+<!-- signup.html -->
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BuildAI — Inscription</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo"><div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,var(--neon),var(--accent));display:flex;align-items:center;justify-content:center;color:#041026;font-weight:800">AI</div> BuildAI</div>
+      <div></div>
+    </div>
+
+    <div class="card" style="max-width:420px;margin:auto">
+      <h2 class="center">Créer un compte</h2>
+
+      <input id="regName" class="input" type="text" placeholder="Nom (facultatif)" />
+      <input id="regEmail" class="input" type="email" placeholder="Email" />
+      <input id="regPassword" class="input" type="password" placeholder="Mot de passe (6+ caractères)" />
+
+      <div class="row">
+        <button id="registerBtn" class="btn" style="flex:1">S'inscrire</button>
+        <a href="login.html" class="btn" style="background:transparent;border:1px solid var(--glass);color:var(--neon)">Connexion</a>
+      </div>
+
+      <div class="center" style="margin-top:12px">
+        <button id="googleRegisterBtn" class="btn" style="background:#db4437;color:#fff">S'inscrire avec Google</button>
+      </div>
+
+      <p id="regMessage" class="small center"></p>
+    </div>
+  </div>
+
+  <script type="module" src="auth.js"></script>
+  <script>window.authInit && window.authInit('signup')</script>
+</body>
+</html>
