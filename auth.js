@@ -22,12 +22,13 @@ import {
 
 /* === REMPLACE ICI ton firebaseConfig === */
 const firebaseConfig = {
-  apiKey: "/* REMPLACE ICI - API KEY */",
-  authDomain: "/* REMPLACE ICI - AUTH DOMAIN */",
-  projectId: "/* REMPLACE ICI - PROJECT ID */",
-  storageBucket: "/* REMPLACE ICI - STORAGE BUCKET */",
-  messagingSenderId: "/* REMPLACE ICI - MSG SENDER */",
-  appId: "/* REMPLACE ICI - APP ID */"
+  apiKey: "AIzaSyAQYsPnbxkXwpWyA6HPZvIvx3tuq4Nfejg",
+  authDomain: "buildai-f12be.firebaseapp.com",
+  projectId: "buildai-f12be",
+  storageBucket: "buildai-f12be.firebasestorage.app",
+  messagingSenderId: "1029156287214",
+  appId: "1:1029156287214:web:46a2f65d03924ea74179ff",
+  measurementId: "G-WN1JXJBH60"
 };
 /* ======================================= */
 
