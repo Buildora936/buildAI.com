@@ -1,55 +1,44 @@
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Méthode non autorisée" });
-  }
-
   try {
-    const { prompt, resolution } = req.body;
-
-    if (!prompt || prompt.trim() === "") {
-      return res.status(400).json({ error: "Aucun prompt fourni." });
+    if (req.method !== "POST") {
+      return res.status(405).json({ error: "Method not allowed" });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    const { prompt } = req.body;
 
-    if (!apiKey) {
-      return res.status(500).json({
-        error: "GEMINI_API_KEY manquant dans Vercel."
-      });
+    if (!prompt) {
+      return res.status(400).json({ error: "Missing prompt" });
+    }
+
+    const API_KEY = process.env.GEMINI_API_KEY;
+
+    if (!API_KEY) {
+      return res.status(500).json({ error: "Missing GEMINI_API_KEY" });
     }
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateImage?key=${apiKey}`,
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateImage?key=" + API_KEY,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          prompt: { text: prompt },
-          imageConfig: {
-            resolution: resolution || "1024x1024"
-          }
+          prompt: { text: prompt }
         })
       }
     );
 
     const data = await response.json();
 
-    // Gemini renvoie : data.images[0].data
-    if (!data.images || !data.images[0] || !data.images[0].data) {
-      return res.status(500).json({
-        error: "Erreur API Gemini",
-        details: data
-      });
+    if (!data.image || !data.image.base64) {
+      return res.status(500).json({ error: "Invalid Gemini response", details: data });
     }
 
-    return res.status(200).json({
-      image: data.images[0].data
+    res.status(200).json({
+      image: data.image.base64
     });
 
   } catch (err) {
-    return res.status(500).json({
-      error: "Erreur serveur",
-      details: err.toString()
-    });
+    console.error("API ERROR:", err);
+    res.status(500).json({ error: "Server error", details: err.message });
   }
 }
