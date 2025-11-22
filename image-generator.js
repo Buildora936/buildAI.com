@@ -48,55 +48,54 @@ onAuthStateChanged(auth, () => {
 // ===========================
 const generate = httpsCallable(functions, "generateImage");
 
-document.getElementById("generateBtn").addEventListener("click", async () => {
-  const prompt = document.getElementById("prompt").value;
-  const loading = document.getElementById("loading");
-  const result = document.getElementById("result");
+const promptInput = document.getElementById("prompt");
+const generateBtn = document.getElementById("generateBtn");
+const loader = document.getElementById("loader");
+const resultImage = document.getElementById("resultImage");
+const downloadBtn = document.getElementById("downloadBtn");
+const resolutionSelect = document.getElementById("resolution");
 
-  if (!prompt.trim()) {
-    alert("Veuillez entrer une description !");
-    return;
+generateBtn.addEventListener("click", async () => {
+  const prompt = promptInput.value.trim();
+  const resolution = resolutionSelect.value;
+
+  if (!prompt) return alert("Entre une description.");
+
+  loader.classList.remove("hidden");
+  resultImage.classList.add("hidden");
+  downloadBtn.classList.add("hidden");
+
+  try {
+    const res = await fetch("/api/generate-image", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt, resolution })
+    });
+
+    const data = await res.json();
+
+    if (data.error) {
+      alert("Erreur: " + data.error);
+      return;
+    }
+
+    const imgBase64 = "data:image/png;base64," + data.image;
+
+    resultImage.src = imgBase64;
+    resultImage.classList.remove("hidden");
+    downloadBtn.classList.remove("hidden");
+
+    downloadBtn.onclick = () => {
+      const link = document.createElement("a");
+      link.href = imgBase64;
+      link.download = "image_buildAI.png";
+      link.click();
+    };
+
+  } catch (err) {
+    alert("Erreur serveur.");
+    console.log(err);
   }
 
-  // ▼ Vérification de l’utilisateur
-  const user = auth.currentUser;
-  if (!user) {
-    alert("Veuillez vous connecter.");
-    return;
-  }
-
-  // ▼ Vérifier crédits
-  const ref = doc(db, "users", user.uid);
-  const snap = await getDoc(ref);
-
-  if (!snap.exists() || snap.data().credits <= 0) {
-    alert("Vous n'avez plus de crédits !");
-    return;
-  }
-
-  // ▼ Déduire 1 crédit
-  await updateDoc(ref, {
-    credits: snap.data().credits - 1
-  });
-  loadCredits();
-
-  loading.style.display = "block";
-  result.innerHTML = "";
-
-  document.getElementById("generateBtn").onclick = async () => {
-  const prompt = document.getElementById("prompt").value;
-
-  const response = await fetch("/api/generate-image", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ prompt })
-  });
-
-  const json = await response.json();
-
-  if (json.url) {
-    document.getElementById("result").src = json.url;
-  } else {
-    alert("Erreur: " + json.error);
-  }
-};
+  loader.classList.add("hidden");
+});rtyu
