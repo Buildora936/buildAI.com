@@ -110,17 +110,24 @@
   }
 </style>
   <h1>🖼️ BuildAI - Générateur d'Images</h1>
+<div class="generator-container">
+  <input id="prompt" placeholder="Décris ton image..." />
 
-  <div class="container">
-    <label for="prompt">Décris ton image :</label>
-    <textarea id="prompt" placeholder="Ex: Un robot bleu néon dans un futur cyberpunk..."></textarea>
+  <select id="resolution">
+    <option value="512x512">512 x 512</option>
+    <option value="1024x1024" selected>HD 1024 x 1024</option>
+    <option value="2048x2048">2K Ultra HD</option>
+  </select>
 
-    <button onclick="generateImage()">Générer l'image</button>
+  <button id="generateBtn">Générer</button>
 
-    <div class="loading" id="loading">⏳ Génération en cours...</div>
+  <div id="loader" class="hidden">⏳ Génération en cours...</div>
 
-    <div class="result" id="result"></div>
-  </div>
+  <img id="resultImage" class="hidden"/>
+
+  <button id="downloadBtn" class="hidden">Télécharger</button>
+</div>
+  
 <script><src="image-generator.js"></script>
 </body>
 </html>
