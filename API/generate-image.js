@@ -1,53 +1,49 @@
 export default async function handler(req, res) {
-  // Autoriser Vercel à accepter JSON
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Méthode non autorisée" });
   }
 
   try {
-    const { prompt } = req.body;
+    const { prompt, resolution } = req.body;
 
-    // Vérification du prompt
     if (!prompt || prompt.trim() === "") {
-      return res.status(400).json({ error: "Veuillez fournir un prompt." });
+      return res.status(400).json({ error: "Aucun prompt fourni." });
     }
 
-    // Clé API stockée dans Vercel (NE PAS mettre dans le code)
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
       return res.status(500).json({
-        error: "GEMINI_API_KEY est manquant dans Vercel."
+        error: "GEMINI_API_KEY manquant dans Vercel."
       });
     }
 
-    // Appel API Gemini
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateImage?key=${apiKey}`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          prompt: { text: prompt }
+          prompt: { text: prompt },
+          imageConfig: {
+            resolution: resolution || "1024x1024"
+          }
         })
       }
     );
 
     const data = await response.json();
 
-    // Vérification du résultat
-    if (!data.image || !data.image.base64) {
+    // Gemini renvoie : data.images[0].data
+    if (!data.images || !data.images[0] || !data.images[0].data) {
       return res.status(500).json({
         error: "Erreur API Gemini",
         details: data
       });
     }
 
-    // Envoi de l’image en base64
     return res.status(200).json({
-      url: `data:image/png;base64,${data.image.base64}`
+      image: data.images[0].data
     });
 
   } catch (err) {
