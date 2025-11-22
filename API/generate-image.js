@@ -10,7 +10,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Missing prompt" });
     }
 
-    const API_KEY ="AIzaSyADvMM0q_NpMRAbc8YaoeLn_iGSwPF0C3E"
+    const API_KEY = process.env.GEMINI_API_KEY; 
 
     if (!API_KEY) {
       return res.status(500).json({ error: "Missing GEMINI_API_KEY" });
