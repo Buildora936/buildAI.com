@@ -1,101 +1,60 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { 
-  getFirestore, doc, getDoc, updateDoc 
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { 
-  getFunctions, httpsCallable 
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-functions.js";
+document.getElementById("generateBtn").addEventListener("click", async () => {
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAQYsPnbxkXwpWyA6HPZvIvx3tuq4Nfejg",
-  authDomain: "buildai-f12be.firebaseapp.com",
-  projectId: "buildai-f12be",
-  storageBucket: "buildai-f12be.firebasestorage.app",
-  messagingSenderId: "1029156287214",
-  appId: "1:1029156287214:web:46a2f65d03924ea74179ff",
-  measurementId: "G-WN1JXJBH60"
-};
+  const prompt = document.getElementById("prompt").value.trim();
+  const style = document.getElementById("style").value;
+  const resolution = document.getElementById("resolution").value;
+  const format = document.getElementById("format").value;
 
-// Initialisation
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const functions = getFunctions(app);
+  if (!prompt) return alert("Entrez une description.");
 
-// ===========================
-//   AFFICHER LES CRÉDITS
-// ===========================
-async function loadCredits() {
-  const user = auth.currentUser;
-  if (!user) return;
+  const finalPrompt = style ? `${prompt}, ${style}` : prompt;
 
-  const ref = doc(db, "users", user.uid);
-  const snap = await getDoc(ref);
+  const loader = document.getElementById("loader");
+  const img = document.getElementById("resultImage");
+  const dl = document.getElementById("downloadSection");
 
-  if (snap.exists()) {
-    document.getElementById("credits").textContent =
-      "Crédits : " + snap.data().credits;
-  }
-}
-
-onAuthStateChanged(auth, () => {
-  loadCredits();
-});
-
-// ===========================
-//   GÉNÉRATION D’IMAGE
-// ===========================
-const generate = httpsCallable(functions, "generateImage");
-
-const promptInput = document.getElementById("prompt");
-const generateBtn = document.getElementById("generateBtn");
-const loader = document.getElementById("loader");
-const resultImage = document.getElementById("resultImage");
-const downloadBtn = document.getElementById("downloadBtn");
-const resolutionSelect = document.getElementById("resolution");
-
-generateBtn.addEventListener("click", async () => {
-  const prompt = promptInput.value.trim();
-  const resolution = resolutionSelect.value;
-
-  if (!prompt) return alert("Entre une description.");
-
-  loader.classList.remove("hidden");
-  resultImage.classList.add("hidden");
-  downloadBtn.classList.add("hidden");
+  img.style.display = "none";
+  dl.style.display = "none";
+  loader.style.display = "block";
 
   try {
-    const res = await fetch("/api/generate-image", {
+    const response = await fetch("/api/generate-image", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt, resolution })
+      body: JSON.stringify({
+        prompt: finalPrompt,
+        resolution,
+        format
+      })
     });
 
-    const data = await res.json();
+    const data = await response.json();
 
     if (data.error) {
-      alert("Erreur: " + data.error);
+      alert("Erreur : " + data.error);
+      loader.style.display = "none";
       return;
     }
 
-    const imgBase64 = "data:image/png;base64," + data.image;
+    const base64 = "data:image/" + format + ";base64," + data.image;
 
-    resultImage.src = imgBase64;
-    resultImage.classList.remove("hidden");
-    downloadBtn.classList.remove("hidden");
+    img.src = base64;
+    img.style.display = "block";
 
-    downloadBtn.onclick = () => {
-      const link = document.createElement("a");
-      link.href = imgBase64;
-      link.download = "image_buildAI.png";
-      link.click();
+    // Télécharger
+    document.getElementById("downloadBtn").onclick = () => {
+      const a = document.createElement("a");
+      a.href = base64;
+      a.download = "buildAI_image." + format;
+      a.click();
     };
 
-  } catch (err) {
+    dl.style.display = "block";
+
+  } catch (e) {
     alert("Erreur serveur.");
-    console.log(err);
+    console.log(e);
   }
 
-  loader.classList.add("hidden");
-});rtyu
+  loader.style.display = "none";
+});
