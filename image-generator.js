@@ -83,18 +83,20 @@ document.getElementById("generateBtn").addEventListener("click", async () => {
   loading.style.display = "block";
   result.innerHTML = "";
 
-  // ▼ Appel Firebase Cloud Function
-  const response = await generate({ prompt });
+  document.getElementById("generateBtn").onclick = async () => {
+  const prompt = document.getElementById("prompt").value;
 
-  loading.style.display = "none";
+  const response = await fetch("/api/generate-image", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt })
+  });
 
-  if (response.data.error) {
-    result.innerHTML = `<p style="color:red;">Erreur : ${response.data.error}</p>`;
-    return;
+  const json = await response.json();
+
+  if (json.url) {
+    document.getElementById("result").src = json.url;
+  } else {
+    alert("Erreur: " + json.error);
   }
-
-  // ▼ Afficher l’image générée
-  result.innerHTML = `
-    <img src="${response.data.url}" style="width:100%;border-radius:10px;">
-  `;
-});
+};
