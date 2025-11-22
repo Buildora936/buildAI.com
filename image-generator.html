@@ -123,7 +123,29 @@
   </div>
 
   <!-- Firebase -->
-  <script type="module">
+  <script type="module"> 
+    import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+const db = getFirestore(app);
+
+// Charger les crédits
+async function loadCredits() {
+  const user = auth.currentUser;
+  if (!user) return;
+
+  const ref = doc(db, "users", user.uid);
+  const snap = await getDoc(ref);
+
+  if (snap.exists()) {
+    document.getElementById("credits").textContent =
+      "Crédits : " + snap.data().credits;
+  }
+}
+
+auth.onAuthStateChanged(() => {
+  loadCredits();
+});
+    
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
