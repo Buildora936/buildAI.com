@@ -20,34 +20,28 @@
       text-shadow: 0 0 10px #0ff;
     }
 
-    .container {
+    .generator-container {
       width: 90%;
-      max-width: 900px;
+      max-width: 600px;
       margin: auto;
-      padding: 20px;
+      padding: 25px;
       background: rgba(0, 20, 40, 0.4);
       border: 1px solid #0ff;
       border-radius: 12px;
       box-shadow: 0 0 15px #0ff;
       margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
 
-    label {
-      font-size: 18px;
-      color: #0ff;
-      text-shadow: 0 0 8px #0ff;
-    }
-
-    textarea {
+    input, select, textarea {
       width: 100%;
-      height: 120px;
-      border-radius: 8px;
-      border: 1px solid #0ff;
+      padding: 12px;
       background: #000;
-      color: white;
-      padding: 10px;
-      font-size: 16px;
-      margin-top: 10px;
+      border: 1px solid #0ff;
+      border-radius: 8px;
+      color: #0ff;
       outline: none;
       box-shadow: 0 0 8px #0ff;
     }
@@ -55,7 +49,6 @@
     button {
       width: 100%;
       padding: 15px;
-      margin-top: 20px;
       background: #0ff;
       color: #000;
       border: none;
@@ -70,64 +63,83 @@
       background: #00e0e0;
     }
 
-    .loading {
-      text-align: center;
-      color: #0ff;
-      margin-top: 20px;
+    /* Loader animé neon */
+    #loader {
       display: none;
-      font-size: 18px;
+      margin: 20px auto;
+      width: 60px;
+      height: 60px;
+      border: 6px solid #0ff;
+      border-top: 6px solid transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
     }
 
-    .result {
-      margin-top: 30px;
-      text-align: center;
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
-    .result img {
+    #resultImage {
       max-width: 100%;
+      margin-top: 20px;
       border-radius: 12px;
       border: 1px solid #0ff;
       box-shadow: 0 0 15px #0ff;
+      display: none;
+    }
+
+    #downloadSection {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    #downloadSection button {
+      margin-top: 10px;
     }
 
   </style>
 </head>
 <body>
-<div id="topbar">
-  <span id="credits">Crédits : ...</span>
-</div>
 
-<style>
-  #topbar {
-    width: 100%;
-    background: #001a2c;
-    padding: 12px;
-    text-align: center;
-    font-size: 20px;
-    color: #0ff;
-    border-bottom: 1px solid #0ff;
-    box-shadow: 0 0 10px #0ff;
-  }
-</style>
-  <h1>🖼️ BuildAI - Générateur d'Images</h1>
+<h1>🖼️ BuildAI — Générateur d'Images HD</h1>
+
 <div class="generator-container">
-  <input id="prompt" placeholder="Décris ton image..." />
+
+  <textarea id="prompt" placeholder="Décris l'image..."></textarea>
+
+  <select id="style">
+    <option value="">Style normal</option>
+    <option value="logo professionnel minimaliste">Logo professionnel</option>
+    <option value="style ultra-réaliste 8k">Ultra réaliste</option>
+    <option value="style personnage mascotte vectoriel">Mascotte</option>
+    <option value="dessin digital illustration détaillée">Illustration</option>
+  </select>
 
   <select id="resolution">
-    <option value="512x512">512 x 512</option>
-    <option value="1024x1024" selected>HD 1024 x 1024</option>
+    <option value="512x512">512 × 512</option>
+    <option value="1024x1024" selected>HD 1024 × 1024</option>
     <option value="2048x2048">2K Ultra HD</option>
   </select>
 
-  <button id="generateBtn">Générer</button>
+  <select id="format">
+    <option value="png">PNG</option>
+    <option value="jpg">JPG</option>
+    <option value="webp">WEBP</option>
+  </select>
 
-  <div id="loader" class="hidden">⏳ Génération en cours...</div>
+  <button id="generateBtn">✨ Générer l’image</button>
 
-  <img id="resultImage" class="hidden"/>
+  <div id="loader"></div>
 
-  <button id="downloadBtn" class="hidden">Télécharger</button>
+  <img id="resultImage" />
+
+  <div id="downloadSection">
+    <button id="downloadBtn">⬇ Télécharger</button>
+  </div>
+
 </div>
-  
+
 <script src="image-generator.js"></script>
 </body>
 </html>
