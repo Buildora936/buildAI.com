@@ -18,7 +18,7 @@ document.getElementById("generateBtn").addEventListener("click", async () => {
   loader.style.display = "block";
 
   try {
-    const response = await fetch("/api/generate-image", {
+    const response = await fetch("/API/generate-image.js", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
