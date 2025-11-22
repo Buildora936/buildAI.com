@@ -175,7 +175,22 @@ auth.onAuthStateChanged(() => {
         alert("Veuillez entrer une description !");
         return;
       }
+    // Vérifier crédits
+const user = auth.currentUser;
+const ref = doc(db, "users", user.uid);
+const snap = await getDoc(ref);
 
+if (!snap.exists() || snap.data().credits <= 0) {
+  alert("Vous n'avez plus de crédits !");
+  return;
+}
+
+// Déduction des crédits
+await updateDoc(ref, {
+  credits: snap.data().credits - 1
+});
+
+loadCredits(); // mettre à jour l’affichage
       loading.style.display = "block";
       result.innerHTML = "";
 
