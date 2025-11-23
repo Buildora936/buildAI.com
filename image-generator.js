@@ -18,7 +18,7 @@ document.getElementById("generateBtn").addEventListener("click", async () => {
   loader.style.display = "block";
 
   try {
-    const response = await fetch("/API/generate-image.js", {
+    const response = await fetch("/api/generate-image", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -41,7 +41,6 @@ document.getElementById("generateBtn").addEventListener("click", async () => {
     img.src = base64;
     img.style.display = "block";
 
-    // Télécharger
     document.getElementById("downloadBtn").onclick = () => {
       const a = document.createElement("a");
       a.href = base64;
