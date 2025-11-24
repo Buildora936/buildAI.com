@@ -1,97 +1,63 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BuildAI — Outils Texte</title>
+  <meta charset="UTF-8">
+  <title>BuildAI • Outils Texte</title>
   <link rel="stylesheet" href="text-tools.css">
 </head>
 <body>
-  <div class="app">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="logo">Build<span>AI</span></div>
-        <div class="small">Outils Texte</div>
-      </div>
 
-      <nav class="tools-list">
-        <button data-tool="improve" class="tool active">✏️ Correcteur / Améliorer</button>
-        <button data-tool="summarize" class="tool">📝 Résumeur</button>
-        <button data-tool="translate" class="tool">🌐 Traducteur</button>
-        <button data-tool="generate" class="tool">⚡ Générateur de texte (IA)</button>
-        <button data-tool="description" class="tool">🛍️ Description produit</button>
-        <button data-tool="bio" class="tool">👤 Rédacteur de biographie</button>
-        <button data-tool="rewrite" class="tool">🔁 Réécriture</button>
-        <button data-tool="transcribe" class="tool">🎤 Transcription</button>
-        <button data-tool="chat" class="tool">💬 Chatbot IA</button>
-      </nav>
+  <div class="container">
 
-      <div class="sidebar-bottom">
-        <label class="switch">
-          <input id="themeToggle" type="checkbox">
-          <span class="slider"></span>
-        </label>
-        <div class="theme-label">Thème rose</div>
-      </div>
-    </aside>
+    <h1 class="title">🧠 Outils d’IA — Texte</h1>
 
-    <main class="workspace">
-      <header class="ws-header">
-        <h1 id="toolTitle">✏️ Correcteur / Améliorer</h1>
-        <div class="controls">
-          <select id="langSelect" class="select">
-            <option value="fr">FR</option>
-            <option value="en">EN</option>
-            <option value="es">ES</option>
-          </select>
-          <button id="runBtn" class="btn">Générer</button>
-        </div>
-      </header>
+    <!-- Sélection d'outil -->
+    <div class="tool-selector">
+      <label>Choisir un outil :</label>
+      <select id="mode">
+        <option value="improve">✏ Correcteur / Amélioration</option>
+        <option value="summarize">📝 Résumeur</option>
+        <option value="translate">🌍 Traducteur</option>
+        <option value="generate">✨ Générateur de texte</option>
+        <option value="description">📦 Description produit</option>
+        <option value="bio">👤 Bio professionnelle</option>
+        <option value="rewrite">♻ Réécriture</option>
+        <option value="chat">🤖 Chatbot IA</option>
+      </select>
+    </div>
 
-      <section class="ws-body">
-        <div class="input-col">
-          <label>Entrée</label>
+    <!-- Zone de texte -->
+    <textarea id="inputText" placeholder="Écris ton texte ici…"></textarea>
 
-          <textarea id="inputText" placeholder="Écris ou colle ton texte ici..."></textarea>
+    <!-- Options pour la traduction -->
+    <div id="translateOptions" class="hidden">
+      <label>Vers quelle langue ?</label>
+      <select id="targetLang">
+        <option value="fr">Français</option>
+        <option value="en">Anglais</option>
+        <option value="es">Espagnol</option>
+        <option value="de">Allemand</option>
+      </select>
+    </div>
 
-          <div id="fileRow" class="file-row hidden">
-            <input id="audioFile" type="file" accept="audio/*">
-            <small class="muted">Choisis un fichier audio pour transcription (mp3/wav)</small>
-          </div>
+    <!-- Bouton -->
+    <button id="runBtn">Exécuter</button>
 
-          <div class="tool-options" id="toolOptions">
-            <!-- Options dynamiques selon l'outil -->
-          </div>
+    <!-- Loader -->
+    <div id="loader" class="hidden">
+      <div class="spinner"></div>
+      Génération en cours…
+    </div>
 
-        </div>
+    <!-- Résultat -->
+    <div id="resultBox" class="hidden">
+      <h2>Résultat</h2>
+      <pre id="result"></pre>
+      <button id="copyBtn">Copier</button>
+    </div>
 
-        <div class="output-col">
-          <label>Résultat</label>
-          <div id="output" class="output">Résultat affiché ici</div>
-
-          <div class="actions">
-            <button id="copyBtn" class="btn ghost">Copier</button>
-            <button id="downloadTxtBtn" class="btn ghost">Télécharger .txt</button>
-            <button id="speakBtn" class="btn ghost">🔊 Écouter</button>
-          </div>
-
-          <div id="chatArea" class="chat-area hidden">
-            <div id="messages" class="messages"></div>
-            <div class="chat-input-row">
-              <input id="chatInput" placeholder="Pose une question au chatbot..." />
-              <button id="chatSend" class="btn">Envoyer</button>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <footer class="ws-footer">
-        <div class="muted">BuildAI • Outils Texte • Version 1.0</div>
-      </footer>
-    </main>
   </div>
 
-  <script src="text-tools.js" defer></script>
+  <script src="text-tools.js"></script>
 </body>
 </html>
