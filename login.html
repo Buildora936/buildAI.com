@@ -2,35 +2,28 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Connexion - BuildAI</title>
   <link rel="stylesheet" href="auth.css">
 </head>
 <body>
 
-<div class="auth-container">
+<div class="card">
+  <h2>Connexion</h2>
 
-  <h2>Se connecter</h2>
+  <input id="loginEmail" type="email" placeholder="Email">
+  <input id="loginPassword" type="password" placeholder="Mot de passe">
 
-  <form id="loginForm">
-    <input id="email" type="email" placeholder="Email" required>
-    <input id="password" type="password" placeholder="Mot de passe" required>
+  <button onclick="login()">Se connecter</button>
 
-    <button type="submit" class="btn-primary">Se connecter</button>
-  </form>
-
-  <div class="divider">ou</div>
-
-  <!-- Google LOGIN button -->
-  <button id="googleLogin" class="btn-google">
+  <button class="google-btn" onclick="googleLogin()">
     <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">
     Continuer avec Google
   </button>
 
   <p>Pas de compte ? <a href="signup.html">Créer un compte</a></p>
-
 </div>
 
-<script src="auth.js"></script>
+<script type="module" src="auth.js"></script>
+
 </body>
 </html>
