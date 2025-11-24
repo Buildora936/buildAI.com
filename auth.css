@@ -1,45 +1,98 @@
-.btn-google {
-  width: 100%;
-  padding: 10px;
+/* ======== Global Style ======== */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #02030f;
+  color: #fff;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
-  background: #fff;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  border-radius: 6px;
-  font-weight: 500;
+  height: 100vh;
 }
 
-.btn-google img {
-  width: 20px;
-  height: 20px;
-}
-
-.btn-primary {
-  width: 100%;
-  padding: 12px;
-  background: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.auth-container {
+.card {
   width: 90%;
-  max-width: 350px;
-  margin: auto;
-  margin-top: 80px;
+  max-width: 420px;
+  padding: 35px;
+  background: rgba(0, 15, 30, 0.55);
+  border: 1px solid #0ff;
+  border-radius: 12px;
+  box-shadow: 0 0 25px #0ff;
+  backdrop-filter: blur(12px);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+h2 {
+  text-align: center;
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff;
 }
 
 input {
   width: 100%;
-  padding: 12px;
-  margin-top: 10px;
+  padding: 14px;
+  margin-top: 12px;
+  border-radius: 8px;
+  border: 1px solid #0ff;
+  background: #000;
+  color: #0ff;
+  box-shadow: 0 0 10px #0ff;
+  outline: none;
 }
-.divider {
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  background: #0ff;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #000;
+  box-shadow: 0 0 20px #0ff;
+}
+
+button:hover {
+  background: #00dada;
+}
+
+/* Google Button */
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #fff;
+  color: #000;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 14px;
+  cursor: pointer;
+  border: none;
+  margin-top: 15px;
+}
+
+.google-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+p {
   text-align: center;
-  margin: 15px 0;
-  color: #888;
+  margin-top: 15px;
+}
+
+a {
+  color: #0ff;
+  text-decoration: none;
+  font-weight: bold;
 }
