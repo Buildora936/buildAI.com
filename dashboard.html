@@ -1,56 +1,62 @@
-<!-- dashboard.html -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BuildAI — Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>BuildAI • Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="logo"><div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,var(--neon),var(--accent));display:flex;align-items:center;justify-content:center;color:#041026;font-weight:800">AI</div> BuildAI</div>
-      <div>
-        <button id="logoutBtn" class="btn" style="background:transparent;border:1px solid var(--glass);color:var(--neon)">Se déconnecter</button>
+
+  <div class="sidebar">
+    <h2 class="logo">Build<span>AI</span></h2>
+
+    <ul class="menu">
+      <li class="menu-item active">🏠 Dashboard</li>
+
+      <li class="menu-item tool-btn" id="openImageGenerator">
+        🎨 Générateur d'images
+      </li>
+
+      <li class="menu-item coming">📝 Générateur de texte</li>
+      <li class="menu-item coming">🤖 Assistant IA</li>
+      <li class="menu-item coming">📊 Analytics</li>
+    </ul>
+
+    <button id="logoutBtn" class="logout">🚪 Déconnexion</button>
+  </div>
+
+
+
+  <div class="content">
+    <h1>Bienvenue sur BuildAI ✨</h1>
+    <p class="subtitle">Choisissez un outil dans le menu à gauche.</p>
+
+    <div class="cards">
+      
+      <div class="card" id="cardImageGenerator">
+        <h3>🎨 Générateur d'images</h3>
+        <p>Créer des images HD avec IA.</p>
       </div>
-    </div>
 
-    <div class="card">
-      <h2>Tableau de bord</h2>
-      <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:12px">
-        <div style="flex:0 0 260px" class="card">
-          <div id="userBox">
-            <div style="display:flex;gap:12px;align-items:center">
-              <div style="width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--neon),var(--accent));display:flex;align-items:center;justify-content:center;color:#041026;font-weight:800" id="avatar">U</div>
-              <div>
-                <div id="displayName" style="font-weight:800;color:var(--neon)">—</div>
-                <div id="email" class="small">—</div>
-              </div>
-            </div>
-
-            <div style="margin-top:12px">
-              <div class="small">Plan</div>
-              <div id="plan" style="font-weight:800;color:var(--neon)">—</div>
-            </div>
-
-            <div style="margin-top:12px">
-              <div class="small">Crédits IA</div>
-              <div id="credits" style="font-weight:800;font-size:22px;color:var(--neon)">0</div>
-            </div>
-
-            <div style="margin-top:12px" class="row">
-              <button id="addCreditsBtn" class="btn" style="flex:1">+ 10 crédits (simuler)</button>
-              <button id="upgradeBtn" class="btn" style="background:linear-gradient(90deg,#ffd86b,#ff7a59);color:#041026">Passer Pro</button>
-            </div>
-          </div>
-        </div>
-
-        <div style="flex:1" class="card">
-          <h3>Historique</h3>
-          <div id="historyList" style="margin-top:12px"></div>
-        </div>
+      <div class="card disabled">
+        <h3>📝 Générateur de texte</h3>
+        <p>Bientôt disponible.</p>
       </div>
+
+      <div class="card disabled">
+        <h3>🤖 Chat IA avancé</h3>
+        <p>Bientôt disponible.</p>
+      </div>
+
+      <div class="card disabled">
+        <h3>📊 Tableau d’analyse</h3>
+        <p>Bientôt disponible.</p>
+      </div>
+
     </div>
   </div>
 
