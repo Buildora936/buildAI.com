@@ -1,66 +1,54 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>BuildAI • Dashboard</title>
-  <link rel="stylesheet" href="dashboard.css">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildAI Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
 </head>
+
 <body>
 
-  <div class="sidebar">
-    <button id="toggleMenu" class="toggle-menu">☰</button>
-    <h2 class="logo">Build<span>AI</span></h2>
+<!-- Bouton pour ouvrir le menu -->
+<button id="toggleMenu" class="toggle-menu">☰</button>
 
-    <ul class="menu">
-      <li class="menu-item active">🏠 Dashboard</li>
+<!-- Sidebar -->
+<div class="sidebar closed" id="sidebar">
+    <h2 class="logo">⚡ BuildAI</h2>
 
-      <li class="menu-item tool-btn" id="openImageGenerator">
-        🎨 Générateur d'images
-      </li>
-
-      <li class="menu-item coming">📝 Générateur de texte</li>
-      <li class="menu-item coming">🤖 Assistant IA</li>
-      <li class="menu-item coming">📊 Analytics</li>
+    <ul>
+        <li id="cardImageGenerator">🖼️ Générateur d’images</li>
+        <li>🔤 Outils texte</li>
+        <li>🎨 Logo Maker</li>
+        <li>👤 Profil</li>
+        <li id="logoutBtn">🚪 Déconnexion</li>
     </ul>
+</div>
 
-    <button id="logoutBtn" class="logout">🚪 Déconnexion</button>
-  </div>
-
-
-
-  <div class="content">
-    <h1>Bienvenue sur BuildAI ✨</h1>
-    <p class="subtitle">Choisissez un outil dans le menu à gauche.</p>
+<!-- Contenu principal -->
+<div class="main">
+    <h1 class="title">Bienvenue sur Build-AI ⚡</h1>
 
     <div class="cards">
-      
-      <div class="card" id="cardImageGenerator">
-        <h3>🎨 Générateur d'images</h3>
-        <p>Créer des images HD avec IA.</p>
-      </div>
 
-      <div class="card disabled">
-        <h3>📝 Générateur de texte</h3>
-        <p>Bientôt disponible.</p>
-      </div>
+        <div class="card" id="openImageGenerator">
+            <h3>🖼️ Générateur d’images</h3>
+            <p>Créer des images HD, logos et illustrations avec BUILD-AI.</p>
+        </div>
 
-      <div class="card disabled">
-        <h3>🤖 Chat IA avancé</h3>
-        <p>Bientôt disponible.</p>
-      </div>
+        <div class="card">
+            <h3>🔤 Outils texte</h3>
+            <p>Traduction, résumé, correction, rédaction…</p>
+        </div>
 
-      <div class="card disabled">
-        <h3>📊 Tableau d’analyse</h3>
-        <p>Bientôt disponible.</p>
-      </div>
+        <div class="card">
+            <h3>🎨 Logo Creator</h3>
+            <p>Génère des logos professionnels en un clic.</p>
+        </div>
 
     </div>
-  </div>
+</div>
 
-  <script src="dashboard.js"></script>
+<script src="dashboard.js"></script>
 </body>
 </html>
