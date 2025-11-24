@@ -8,16 +8,16 @@ import {
   signInWithPopup
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
-// ====== CONFIG FIREBASE (mettre la tienne) ======
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAQYsPnbxKXwpWyA6HPZvIvx3tuq4Nfejg",
+  apiKey: "AIzaSyAQYsPnbxkXwpWyA6HPZvIvx3tuq4Nfejg",
   authDomain: "buildai-f12be.firebaseapp.com",
   projectId: "buildai-f12be",
   storageBucket: "buildai-f12be.firebasestorage.app",
   messagingSenderId: "1029156287214",
-  appId: "1:1029156287214:web:46a2f65d03924ea74179ff"
+  appId: "1:1029156287214:web:46a2f65d03924ea74179ff",
+  measurementId: "G-WN1JXJBH60"
 };
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
