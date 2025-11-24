@@ -116,3 +116,11 @@ body {
   opacity: 0.3;
   cursor: not-allowed;
 }
+.sidebar.closed {
+  transform: translateX(-260px);
+  transition: 0.3s ease;
+}
+
+.sidebar {
+  transition: 0.3s ease;
+}
