@@ -1,6 +1,4 @@
-// ---------------------------
-// Firebase Init
-// ---------------------------
+// ====== Import Firebase ======
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import {
   getAuth,
@@ -10,77 +8,50 @@ import {
   signInWithPopup
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
-// FIREBASE CONFIGURATION
+// ====== CONFIG FIREBASE (mettre la tienne) ======
 const firebaseConfig = {
-  apiKey: "AIzaSyAQYsPnbxkXwpWyA6HPZvIvx3tuq4Nfejg",
+  apiKey: "AIzaSyAQYsPnbxKXwpWyA6HPZvIvx3tuq4Nfejg",
   authDomain: "buildai-f12be.firebaseapp.com",
   projectId: "buildai-f12be",
   storageBucket: "buildai-f12be.firebasestorage.app",
   messagingSenderId: "1029156287214",
-  appId: "1:1029156287214:web:46a2f65d03924ea74179ff",
-  measurementId: "G-WN1JXJBH60"
+  appId: "1:1029156287214:web:46a2f65d03924ea74179ff"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-// ---------------------------
-// SIGNUP email
-// ---------------------------
-const signupForm = document.getElementById("signupForm");
+// ====== SIGNUP ======
+window.signup = function () {
+  const email = document.getElementById("signupEmail").value;
+  const password = document.getElementById("signupPassword").value;
 
-if (signupForm) {
-  signupForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const email = document.getElementById("email").value.trim();
-    const pass = document.getElementById("password").value.trim();
-
-    try {
-      await createUserWithEmailAndPassword(auth, email, pass);
-      window.location.href = "dashboard.html"; // redirection OK
-    } catch (error) {
-      alert(error.message);
-    }
-  });
-}
-
-// ---------------------------
-// LOGIN email
-// ---------------------------
-const loginForm = document.getElementById("loginForm");
-
-if (loginForm) {
-  loginForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const email = document.getElementById("email").value.trim();
-    const pass = document.getElementById("password").value.trim();
-
-    try {
-      await signInWithEmailAndPassword(auth, email, pass);
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      alert("Compte créé !");
       window.location.href = "dashboard.html";
-    } catch (error) {
-      alert(error.message);
-    }
-  });
-}
+    })
+    .catch(err => alert(err.message));
+};
 
-// ---------------------------
-// GOOGLE LOGIN + SIGNUP
-// ---------------------------
-const googleLogin = document.getElementById("googleLogin");
-const googleSignup = document.getElementById("googleSignup");
+// ====== LOGIN ======
+window.login = function () {
+  const email = document.getElementById("loginEmail").value;
+  const password = document.getElementById("loginPassword").value;
 
-async function googleAuth() {
-  try {
-    await signInWithPopup(auth, provider);
-    window.location.href = "dashboard.html";
-  } catch (error) {
-    alert(error.message);
-  }
-}
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      window.location.href = "dashboard.html";
+    })
+    .catch(err => alert(err.message));
+};
 
-if (googleLogin) googleLogin.onclick = googleAuth;
-if (googleSignup) googleSignup.onclick = googleAuth;
+// ====== GOOGLE LOGIN ======
+window.googleLogin = function () {
+  signInWithPopup(auth, provider)
+    .then(() => {
+      window.location.href = "dashboard.html";
+    })
+    .catch(err => alert(err.message));
+};
