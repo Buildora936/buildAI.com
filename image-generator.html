@@ -3,139 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BuildAI - Image Generator</title>
+  <title>BuildAI - Générateur d'Images</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #02030f;
-      color: #fff;
-    }
-
-    h1 {
-      text-align: center;
-      color: #0ff;
-      margin-top: 30px;
-      text-shadow: 0 0 10px #0ff;
-    }
-
-    .generator-container {
-      width: 90%;
-      max-width: 600px;
-      margin: auto;
-      padding: 25px;
-      background: rgba(0, 20, 40, 0.4);
-      border: 1px solid #0ff;
-      border-radius: 12px;
-      box-shadow: 0 0 15px #0ff;
-      margin-top: 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 12px;
-      background: #000;
-      border: 1px solid #0ff;
-      border-radius: 8px;
-      color: #0ff;
-      outline: none;
-      box-shadow: 0 0 8px #0ff;
-    }
-
-    button {
-      width: 100%;
-      padding: 15px;
-      background: #0ff;
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      font-size: 20px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 15px #0ff;
-    }
-
-    button:hover {
-      background: #00e0e0;
-    }
-
-    /* Loader animé neon */
-    #loader {
-      display: none;
-      margin: 20px auto;
-      width: 60px;
-      height: 60px;
-      border: 6px solid #0ff;
-      border-top: 6px solid transparent;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    #resultImage {
-      max-width: 100%;
-      margin-top: 20px;
-      border-radius: 12px;
-      border: 1px solid #0ff;
-      box-shadow: 0 0 15px #0ff;
-      display: none;
-    }
-
-    #downloadSection {
-      display: none;
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    #downloadSection button {
-      margin-top: 10px;
-    }
-
-  </style>
+  <link rel="stylesheet" href="image-generator.css" />
 </head>
 <body>
 
-<h1>🖼️ BuildAI — Générateur d'Images HD</h1>
+<header class="header">
+  <h1>✨ BuildAI — Générateur d’Images HD</h1>
+  <button id="themeToggle" class="theme-btn">🎨 Changer de thème</button>
+</header>
 
-<div class="generator-container">
+<div class="gen-wrapper">
 
-  <textarea id="prompt" placeholder="Décris l'image..."></textarea>
+  <textarea id="prompt" class="input" placeholder="Décris l'image que tu veux créer..."></textarea>
 
-  <select id="style">
-    <option value="">Style normal</option>
-    <option value="logo professionnel minimaliste">Logo professionnel</option>
-    <option value="style ultra-réaliste 8k">Ultra réaliste</option>
-    <option value="style personnage mascotte vectoriel">Mascotte</option>
-    <option value="dessin digital illustration détaillée">Illustration</option>
-  </select>
+  <div class="row">
+    <select id="style" class="input">
+      <option value="">Style normal</option>
+      <option value="logo professionnel minimaliste">Logo professionnel</option>
+      <option value="style ultra-réaliste 8k">Ultra réaliste</option>
+      <option value="style personnage mascotte vectoriel">Mascotte</option>
+      <option value="dessin digital illustration détaillée">Illustration</option>
+    </select>
 
-  <select id="resolution">
-    <option value="512x512">512 × 512</option>
-    <option value="1024x1024" selected>HD 1024 × 1024</option>
-    <option value="2048x2048">2K Ultra HD</option>
-  </select>
+    <select id="resolution" class="input">
+      <option value="512x512">512 × 512</option>
+      <option value="1024x1024" selected>1024 × 1024 (HD)</option>
+      <option value="2048x2048">2K Ultra HD</option>
+    </select>
+  </div>
 
-  <select id="format">
-    <option value="png">PNG</option>
-    <option value="jpg">JPG</option>
-    <option value="webp">WEBP</option>
-  </select>
+  <div class="row">
+    <select id="format" class="input">
+      <option value="png">PNG</option>
+      <option value="jpg">JPG</option>
+      <option value="webp">WEBP</option>
+    </select>
+  </div>
 
-  <button id="generateBtn">✨ Générer l’image</button>
+  <button id="generateBtn" class="btn">⚡ Générer l'image</button>
 
-  <div id="loader"></div>
+  <div id="loader" class="loader"></div>
 
   <img id="resultImage" />
 
-  <div id="downloadSection">
-    <button id="downloadBtn">⬇ Télécharger</button>
+  <div id="downloadSection" class="download-box">
+    <button id="downloadBtn" class="btn small">⬇ Télécharger</button>
   </div>
 
 </div>
