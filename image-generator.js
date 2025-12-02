@@ -57,3 +57,16 @@ document.getElementById("generateBtn").addEventListener("click", async () => {
 
   loader.style.display = "none";
 });
+// -------------------------
+// 🎨 SWITCH THÈME
+// -------------------------
+const themeBtn = document.getElementById("themeToggle");
+
+themeBtn.addEventListener("click", () => {
+  document.body.classList.toggle("theme-pink");
+
+  themeBtn.textContent = 
+    document.body.classList.contains("theme-pink")
+    ? "🎨 Thème Bleu"
+    : "🎨 Thème Rose";
+});
